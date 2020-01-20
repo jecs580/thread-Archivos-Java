@@ -6,39 +6,39 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Random;
 
 class Main {
     public static void main(String[] args) {
+        /* Antes de ejecutar los hilos debes cargar los datos de las fechas al archivo.
+        Esto solo se hace en caso de que no tengas el archivo. 
+        Para esto debemos ejecutar el programa con solo las 2 lineas que estan abajo.
+        Una vez echo esto comentamos de nuevo las 2 lineas y ejutamos los n-hilos.
+        */
+
         Escribir_Ficheros ef=new Escribir_Ficheros();
-        Alumno a1=new Alumno("jorge");
-        Alumno a2=new Alumno("carlos");
-       
-        a1.start();
-        a2.start();
-        //ef.escribir();
-        // Pila a=new Pila();
-        // lf.llenarp(a);
-        // a.mostrar();
-        // int valor=random.nextInt(a.nroelem())+1; // Numeros entre 1-3
-        // System.out.println("Valor random: "+valor);
-        // System.out.println(a.nroelem());
-        // System.out.println("Valor eliminado: "+a.elim_i(valor));
-        // ef.escribirp(a);
-    }
+        ef.escribir();
+        // Cada vez que se llame a un correr un hilo genera una fecha de manera aleatoria y 
+        // se le asignara al objeto Alumno en su atributo fecha
+
+        /*Alumno[] hilos = new Alumno[10];
+        for (int i = 0; i < hilos.length; i++) {
+            Alumno a=new Alumno("Alumno "+i);
+            a.start();
+        } */
     
+    }   
 }
 
 class Leer_Fichero {
     int c;
 
     public void leer() {
+        //Imprime por consola cada linea del archivo
         try {
-            FileReader entrada = new FileReader("holamundo2.txt"); // Buscara un archivo que se encuentre en la misma ruta donde se encuentre el archivo.
-            BufferedReader br =new BufferedReader(entrada); // Mandamos una instancia de tipo Reader que es el archivo.
-            // Almacenamos en una memoria interna que nos servira para poder leer de manera mas eficiente el archivo.
+            FileReader entrada = new FileReader("holamundo2.txt");
+            BufferedReader br =new BufferedReader(entrada); 
             String linea;
-            while ((linea=br.readLine())!=null) { //readLine leera un linea hasta encontrar un \n o \r en el texto. Si no encuentra ninguno de estos 2 devolvera null y sabremos q es el fin del archivo
+            while ((linea=br.readLine())!=null) { 
                 System.out.println(linea);
                 c++;
             }
@@ -52,12 +52,12 @@ class Leer_Fichero {
 
     }
     public void llenarp(Pila a){
+        // Copiamos todos los datos del archivo a una pila
         try {
             FileReader entrada = new FileReader("holamundo2.txt"); // Buscara un archivo que se encuentre en la misma ruta donde se encuentre el archivo.
-            BufferedReader br =new BufferedReader(entrada); // Mandamos una instancia de tipo Reader que es el archivo.
-            // Almacenamos en una memoria interna que nos servira para poder leer de manera mas eficiente el archivo.
+            BufferedReader br =new BufferedReader(entrada); 
             String linea;
-            while ((linea=br.readLine())!=null) { //readLine leera un linea hasta encontrar un \n o \r en el texto. Si no encuentra ninguno de estos 2 devolvera null y sabremos q es el fin del archivo
+            while ((linea=br.readLine())!=null) {
                 a.adicionar(linea);
             }
             br.close();
@@ -71,6 +71,7 @@ class Leer_Fichero {
 }
 class Escribir_Ficheros{
     public void escribirp(Pila a){
+        // Escribimos los datos que estaban en un pila al archivo nuevamente,vaciamos los datos a otra pila que se llene en el archivo en el mismo orden que se escribieron
         Pila w=new Pila();
         w.vaciar(a);
         try {
@@ -84,11 +85,14 @@ class Escribir_Ficheros{
         }
     }
     public void escribir(){
+        /* Escribe en Archivo.
+        
+        Esta funcion se ejecutara una sola vez para generar todas las posibles fechas de inscripcion separadas por rangos de 30 min en 3 dias.
+        Cada linea del archivo contendra MES DIA HORA MINUTO, (Los meses en java empiezan en 0)
+        */
         Calendar calendario = Calendar.getInstance();
         try {
-            // Escribira en un fichero existen o lo creara en caso de que no exista.
             FileWriter fw = new FileWriter("holamundo2.txt"); // Si solo colocas el nombre del archivo se creara en la ruta donde se este ejecutando el programa.
-            // (char)97 Para obtener simbolo de un determino orden de ascii.
             
             int k = 0;
             calendario.set(calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH),

@@ -20,10 +20,9 @@ class Alumno extends Thread {
             Random random=new Random();
             try {
             int valor =random.nextInt(a.nroelem())+1;
-            valor-=1;
-            // System.out.println("Antes: "+this.nombre+" "+a.nroelem());
+            int valor2=random.nextInt(a.nroelem())+1;
+            valor=(valor+valor2-1)/2;
             String aux=a.elim_i(valor);
-            // System.out.println("Despues: "+this.nombre+" "+a.nroelem());
             String cadena[]=aux.split(" ");
             if(cadena[3].equals("0")){
                 this.fecha = cadena[1]+"/"+(Integer.parseInt(cadena[0])+1)+"/"+2020+" - "+cadena[2]+":"+cadena[3]+"0 hrs";
@@ -33,7 +32,7 @@ class Alumno extends Thread {
             System.out.println("¡Hola "+this.nombre+"!, tu fecha de inscripcion es el: "+this.fecha);
             ef.escribirp(a);
         } catch (Exception e) {
-            System.out.println("Algo salio mal intenta de nuevo");
+            System.out.println("Ups, algo salio mal intenta de nuevo por favor "+this.nombre);
         }
     }
 }
